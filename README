@@ -1,0 +1,52 @@
+About
+
+   This module is an implementation of the SPARQL protocol and result format
+   with minimal dependencies. Specificatlly it should be possible to run this
+   module using only packages provided by your distribution, making it suitable
+   for corporate environments.
+
+   The dependencies are:
+      LWP::UserAgent
+      LWP::ConnCache
+      URI::Escape
+      XML::Simple
+
+   This module will also use Keepalive HTTP Connections where possible.
+
+Usage
+
+   use sparql;
+
+   my $sparql = sparql->new();
+
+   my $res = $sparql->query('http://dbpedia.org/sparql',
+                            'SELECT * WHERE { ?s ?p ?o } LIMIT 10');
+
+   for my $row (@{$res}) {
+   	for my $col (keys %{$row}) {
+   		print('?'.$col.' = '.$row->{$col}."\n");
+   	}
+   	print("\n");
+   }
+
+Methods
+
+   new()
+
+   Returns a SPARQL client object.
+
+   query(endpoint, query string)
+
+   Takes and endpoint URI, and a query, and returns a reference to an array of
+   hashes, for SELECT, and a string for CONSTRUCT etc. Each element in the
+   array (a hash) is a solution, the keys of the hash are the variable name
+   (without the ? or $), and the value is a Turtle literal representing the result
+   value.
+
+   update(endpoint, update string)
+
+   Takes and endpoint URI, and a query, and returns a string of the returned message.
+
+   print(result)
+
+   Formats query a result object and prints it to STDOUT.
