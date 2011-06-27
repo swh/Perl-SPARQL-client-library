@@ -47,6 +47,11 @@ Methods
 
    Takes and endpoint URI, and a query, and returns a string of the returned message.
 
+   chomp(turtle literal)
+
+   Removes any Turtle-style gubbins from around a returned value, e.g. '"foo"' -> 'foo',
+   '<http://example.com/>' -> 'http://example.com/'.
+
    print(result)
 
    Formats query a result object and prints it to STDOUT.
