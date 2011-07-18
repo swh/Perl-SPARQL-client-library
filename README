@@ -1,7 +1,7 @@
 About
 
    This module is an implementation of the SPARQL protocol and result format
-   with minimal dependencies. Specificatlly it should be possible to run this
+   with minimal dependencies. Specifically it should be possible to run this
    module using only packages provided by your distribution, making it suitable
    for corporate environments.
 
