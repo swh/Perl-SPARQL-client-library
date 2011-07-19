@@ -55,3 +55,4 @@ Methods
    print(result)
 
    Formats query a result object and prints it to STDOUT.
+
