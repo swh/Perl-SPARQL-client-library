@@ -33,26 +33,36 @@ Methods
 
    new()
 
-   Returns a SPARQL client object.
+     Returns a SPARQL client object.
 
-   query(endpoint, query string)
+     query(endpoint, query string)
 
-   Takes and endpoint URI, and a query, and returns a reference to an array of
-   hashes, for SELECT, and a string for CONSTRUCT etc. Each element in the
-   array (a hash) is a solution, the keys of the hash are the variable name
-   (without the ? or $), and the value is a Turtle literal representing the result
-   value.
+     Takes and endpoint URI, and a query, and returns a reference to an array of
+     hashes, for SELECT, and a string for CONSTRUCT etc. Each element in the
+     array (a hash) is a solution, the keys of the hash are the variable name
+     (without the ? or $), and the value is a Turtle literal representing the result
+     value.
 
    update(endpoint, update string)
 
-   Takes and endpoint URI, and a query, and returns a string of the returned message.
+     Takes an endpoint URI, and a query, and returns a string of the returned message.
+
+   put(endpoint, graph uri, mime type, RDF text)
+
+     Takes an endpoint URI, and graph to write to, a MIME type and some RDF
+     data, and writes the data into the graph at the endpoint.
+
+     Example: $sparql->put('http://host.example/data', 'http://mygraph.example/data.rdf',
+                           'text/turtle', "<s> <p> <o> .\n");
+
+     Returns whatever text the endpoint returns as a result.
 
    chomp(turtle literal)
 
-   Removes any Turtle-style gubbins from around a returned value, e.g. '"foo"' -> 'foo',
-   '<http://example.com/>' -> 'http://example.com/'.
+     Removes any Turtle-style gubbins from around a returned value, e.g. '"foo"' -> 'foo',
+     '<http://example.com/>' -> 'http://example.com/'.
 
    print(result)
 
-   Formats query a result object and prints it to STDOUT.
+     Formats query a result object and prints it to STDOUT.
 
