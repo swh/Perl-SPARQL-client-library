@@ -1,5 +1,6 @@
 package sparql;
 
+use HTTP::Request::Common;
 use LWP::UserAgent;
 use LWP::ConnCache;
 use URI::Escape;
@@ -133,6 +134,32 @@ sub update {
     }
 
     return $ret;
+}
+
+sub put {
+	my ($self, $uri, $doc, $mime, $text) = @_;
+
+	if (!$uri) {
+		warn "SPARQL::update() called without endpoint";
+		return undef;
+	}
+
+	if ($uri =~ /\?/) {
+		$uri .= '&graph='.uri_escape($doc);
+	} else {
+		$uri .= '?graph='.uri_escape($doc);
+	}
+	my $response = $self->{'_ua'}->request(PUT $uri, 'Content-Type' => $mime, 'Content-Length' => length($text), 'Content' => $text);
+	if ($response->is_success) {
+		return $response->decoded_content;
+	} elsif ($response->header("Client-Aborted")) {
+		warn "Response timeout";
+
+		return undef;
+	}
+	warn $response->status_line."\n".$response->decoded_content;
+
+	return undef;
 }
 
 sub print {
