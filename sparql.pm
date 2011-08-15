@@ -10,7 +10,7 @@ use strict;
 sub new {
     my $class = shift;
     my $ua = LWP::UserAgent->new(keep_alive => 1);
-    $ua->timeout(60);
+    $ua->timeout(600);
     $ua->conn_cache(LWP::ConnCache->new());
     $ua->conn_cache->total_capacity(10);
     $ua->agent("sparql.pm/1.1");
