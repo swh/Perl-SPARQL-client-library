@@ -94,7 +94,24 @@ sub query {
                 if ($val->{'uri'}) {
                     $row{$binding} = '<'.$val->{'uri'}->[0].'>';
                 } elsif ($val->{'literal'}) {
-                    $row{$binding} = '"'.$val->{'literal'}->[0].'"';
+                    my $literal = $val->{'literal'}->[0];
+                    my $content;
+
+                    if (ref($literal)) {
+                        $content = '"' . $val->{'literal'}->[0]->{'content'} . '"';
+                        my $dt = $val->{'literal'}->[0]->{'datatype'};
+                        my $lang = $val->{'literal'}->[0]->{'xml:lang'};
+
+                        if ($dt) {
+                            $content .= "^^<$dt>";
+                        } elsif ($lang) {
+                            $content .= '@' . $lang;
+                        }
+                    } else {
+                        $content = '"' . $literal . '"';
+                    }
+
+                    $row{$binding} = $content;
                 } elsif ($val->{'bnode'}) {
                     $row{$binding} = '_:'.$val->{'literal'}->[0];
                 } else {
