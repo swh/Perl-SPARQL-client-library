@@ -66,3 +66,7 @@ Methods
 
      Formats query a result object and prints it to STDOUT.
 
+Licence
+
+    The sparql.pm module itsself is licenced under the Lesser GPL, version 3+,
+    and the example code is 2-clause BSD.
